@@ -24,17 +24,17 @@ def import_data():
 
     # Importer les produits
     produits_data = download_data(url_produits)
-    produits_df = pd.read_csv(pd.compat.StringIO(produits_data.decode('utf-8')))
+    produits_df = pd.read_csv(produits_data)
     produits_df.to_sql('produits', conn, if_exists='append', index=False)
 
     # Importer les magasins
     magasins_data = download_data(url_magasins)
-    magasins_df = pd.read_csv(pd.compat.StringIO(magasins_data.decode('utf-8')))
+    magasins_df = pd.read_csv(magasins_data)
     magasins_df.to_sql('magasins', conn, if_exists='append', index=False)
 
     # Importer les ventes (uniquement les nouvelles données)
     ventes_data = download_data(url_ventes)
-    ventes_df = pd.read_csv(pd.compat.StringIO(ventes_data.decode('utf-8')))
+    ventes_df = pd.read_csv(ventes_data)
     ventes_df.to_sql('ventes', conn, if_exists='append', index=False)
 
     # Valider les changements
