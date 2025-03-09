@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  script_runner:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - data_storage
+    command: >
+      sh -c "python scripts/hello-world.py  && tail -f /dev/null"
+
+  data_storage:
+    image: nouchka/sqlite3
+    volumes:
+      - ./data:/data
+      - ./scripts:/scripts
+    entrypoint: ["sh", "-c"]
+    command: >
+      "chmod +x /scripts/init_db.sh && /scripts/init_db.sh  && chmod +x /scripts/import_data.py &&  /scripts/import_data.py  && sqlite3 /data/test.db && tail -f /dev/null"
